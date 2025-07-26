@@ -35,4 +35,13 @@ public class Member {
     private void createDateTime() {
         this.created_at = LocalDateTime.now();
     }
+
+    public Member(String email, Address address, String password, String username, String phone) {
+        this.email = email;
+        this.address = address;
+        this.role = Role.USER;
+        this.password = password;
+        this.username = username;
+        this.phone = phone;
+    }
 }
