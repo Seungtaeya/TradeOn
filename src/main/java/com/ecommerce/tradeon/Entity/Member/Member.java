@@ -1,4 +1,4 @@
-package com.ecommerce.tradeon.Entity;
+package com.ecommerce.tradeon.Entity.Member;
 
 import com.ecommerce.tradeon.Entity.vo.Address;
 import com.ecommerce.tradeon.Enums.Role;
