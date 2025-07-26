@@ -25,7 +25,7 @@ public class ProductOption {
         this.value = value;
     }
 
-    public void assignProduct(Product) {
+    public void assignProduct(Product product) {
         this.product = product;
     }
 }
