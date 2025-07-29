@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor()
 public class Product {
 
     @Id @GeneratedValue
@@ -38,10 +38,7 @@ public class Product {
     private boolean isUsed;
     private LocalDateTime create_At;
 
-    public Product(Member seller_id, Category category, List<ProductImage> images, String title, String description, int price, int stock, boolean isUsed) {
-        this.seller_id = seller_id;
-        this.category = category;
-        this.images = images;
+    public void setProduct(String title, String description, int price, int stock, boolean isUsed) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -61,6 +58,24 @@ public class Product {
         this.images.add(productImage);
         productImage.assignProduct(this);
     }
+
+    public void changeTitle (String title) {
+        this.title = title;
+    }
+
+    public void changeDescription (String description) {
+        this.description = description;
+    }
+
+    public void changePrice (int price) {
+        this.price = price;
+    }
+
+    public void changeStock (int stock) {
+        this.stock = stock;
+    }
+
+
 
     @PrePersist
     private void CreateProductTime() {

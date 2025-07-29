@@ -19,7 +19,13 @@ public class Category {
     @JoinColumn(name = "parent_id")
     private Category parent;
 
-    public Category(String name) {
+
+    public Category(String name, Category parent) {
+        this.name = name;
+        assignParentCategory(parent);
+    }
+
+    public void changeName(String name) {
         this.name = name;
     }
 

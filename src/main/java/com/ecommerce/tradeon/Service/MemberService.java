@@ -32,4 +32,9 @@ public class MemberService {
 
         return new myPageMemberDto(member.getUsername(),member.getEmail(), member.getPhone(), member.getCreated_at());
     }
+
+    public Member findByMemberId(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원 입니다."));
+    }
 }
