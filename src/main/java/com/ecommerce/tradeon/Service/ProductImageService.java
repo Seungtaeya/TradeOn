@@ -1,9 +1,9 @@
 package com.ecommerce.tradeon.Service;
 
 import com.ecommerce.tradeon.Entity.Image.ProductImage;
+import com.ecommerce.tradeon.Entity.product.Product;
 import com.ecommerce.tradeon.Repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,31 +12,36 @@ import java.io.File;
 import java.io.IOException;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ProductImageService {
 
     private final ProductImageRepository productImageRepository;
 
-    public String createImage(MultipartFile image) throws IOException {
+    @Transactional
+    public ProductImage createImage(MultipartFile image) {
 
         String savePath = null;
 
         if(!image.isEmpty()) {
-            String uploadDir = "/Users/seungtae/IdeaProjects/TradeOn/uploads";
+            try {
+                String uploadDir = "/Users/seungtae/IdeaProjects/TradeOn/uploads";
 
-            String fileName = image.getName();
+                String fileName = image.getOriginalFilename();
 
-            File destfile = new File(uploadDir);
+                File destfile = new File(uploadDir, fileName);
 
-            image.transferTo(destfile);
+                image.transferTo(destfile);
 
-            savePath = "/uploads/" + fileName;
-            ProductImage productImage = new ProductImage(savePath);
+                savePath = "/uploads/" + fileName;
+                ProductImage productImage = new ProductImage(savePath);
 
-            productImageRepository.save(productImage);
-            return savePath;
-        } else
-            return null;
+                return productImageRepository.save(productImage);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }
