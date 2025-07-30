@@ -44,4 +44,14 @@ public class Member {
         this.username = username;
         this.phone = phone;
     }
+
+    public void changeRole(String role) {
+        if (Role.ADMIN.name().equals(role)){
+            this.role = Role.ADMIN;
+        } else if (Role.COMPANY.name().equals(role)) {
+            this.role = Role.COMPANY;
+        } else {
+            this.role = Role.USER;
+        }
+    }
 }
