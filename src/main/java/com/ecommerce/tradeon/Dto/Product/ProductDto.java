@@ -1,12 +1,10 @@
 package com.ecommerce.tradeon.Dto.Product;
 
-import com.ecommerce.tradeon.Dto.Category.CategoryDto;
 import com.ecommerce.tradeon.Entity.Image.ProductImage;
 import com.ecommerce.tradeon.Entity.product.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -16,21 +14,16 @@ public class ProductDto {
     private Long id;
     private Long seller_id;
     private Long category_id;
-    private String categoryName;
     private List<ProductImageDto> imageUrl;
     private String title;
     private String description;
     private int price;
     private int stock;
     private Boolean isUsed;
-    private LocalDateTime createAt;
 
     public static ProductDto setForm(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
-        productDto.setSeller_id(product.getSeller_id().getId());
-        productDto.setCategory_id(product.getCategory().getId());
-        productDto.setCategoryName(product.getCategory().getName());
         List<ProductImageDto> images = product.getImages().stream()
                 .map(ProductImageDto::setForm)
                 .toList();
@@ -41,7 +34,6 @@ public class ProductDto {
         productDto.setPrice(product.getPrice());
         productDto.setStock(product.getStock());
         productDto.setIsUsed(product.isUsed());
-        productDto.setCreateAt(product.getCreate_At());
         return productDto;
     }
 
