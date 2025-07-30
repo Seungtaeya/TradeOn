@@ -49,4 +49,22 @@ class ProductServiceTest {
         assertThat(product.getCategory().getId()).isEqualTo(productDto.getCategory_id());
         assertThat(product.getPrice()).isEqualTo(productDto.getPrice());
     }
+
+    @Test
+    public void modify() throws Exception {
+        //given
+        ProductDto productDto = new ProductDto(1L,1L,null,"testproduct","test",10000,100,true);
+        Product product = productService.createProduct(productDto, null);
+
+        ProductDto productDto1 = new ProductDto(1L, 1L,null,"modify","modify",10,100,false);
+        //when
+        productService.modifyProduct(product.getId(),productDto1);
+        ProductDto productOne = productService.getProductOne(1L);
+        //then
+
+        assertThat(productDto1.getTitle()).isEqualTo(productOne.getTitle());
+        assertThat(productDto.getTitle()).isNotEqualTo(productOne.getTitle());
+        assertThat(productDto1.getDescription()).isEqualTo(productOne.getDescription());
+        assertThat(productDto.getDescription()).isNotEqualTo(productOne.getDescription());
+    }
 }
