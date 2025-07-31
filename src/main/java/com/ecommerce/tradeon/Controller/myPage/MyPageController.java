@@ -1,5 +1,6 @@
 package com.ecommerce.tradeon.Controller.myPage;
 
+import com.ecommerce.tradeon.Dto.Category.CategoryDto;
 import com.ecommerce.tradeon.Dto.Member.myPageMemberDto;
 import com.ecommerce.tradeon.Dto.Product.ProductDto;
 import com.ecommerce.tradeon.Dto.Session.SessionMember;
@@ -58,15 +59,17 @@ public class MyPageController {
     @GetMapping("/mypage/product/{id}/edit")
     public String editProduct(@PathVariable(name = "id")Long productId, Model model) {
         ProductDto productOne = productService.getProductOne(productId);
+        List<CategoryDto> categories = categoryService.listAll();
 
+        model.addAttribute("categories",categories);
         model.addAttribute("product", productOne);
         return "Member/myPageEdit";
     }
 
     @PostMapping("/mypage/product/{id}/edit")
-    public String editProduct(@PathVariable(name = "id")Long productId,ProductDto productDto, List<MultipartFile> multipartFiles) {
-        productService.modifyProduct(productId,productDto,multipartFiles);
+    public String editProduct(@PathVariable(name = "id")Long productId,ProductDto productDto, List<MultipartFile> images) {
 
+        productService.modifyProduct(productId,productDto,images);
         return "redirect:/product/detail/" + productId;
     }
 }
