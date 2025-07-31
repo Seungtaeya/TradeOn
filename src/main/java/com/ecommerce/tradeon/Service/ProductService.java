@@ -78,20 +78,25 @@ public class ProductService {
     public void modifyProduct(Long productId, ProductDto productDto, List<MultipartFile> image) {
         Product product = getProduct(productId);
 
+
+        Category category = categoryService.getCategoryEntity(productDto.getCategory_id());
+
         product.changeTitle(productDto.getTitle());
         product.changeDescription(productDto.getDescription());
         product.changePrice(productDto.getPrice());
         product.changeStock(productDto.getStock());
+        product.changeUsed(productDto.getIsUsed());
+        product.changeCategory(category);
 
-        if(image != null) {
+        if(image != null && !image.isEmpty()) {
             for (MultipartFile multipartFile : image) {
                 ProductImage productImage = productImageService.createImage(multipartFile);
 
-                product.assignProductImages(productImage);
-
+                if(productImage != null) {
+                    product.assignProductImages(productImage);
+                }
             }
         }
-
 
     }
 

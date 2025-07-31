@@ -76,7 +76,7 @@ public class Product {
     }
 
     public void changeUsed(boolean uesed) {
-        this.isUsed = isUsed;
+        this.isUsed = uesed;
     }
 
     public void changeCategory(Category category) {
