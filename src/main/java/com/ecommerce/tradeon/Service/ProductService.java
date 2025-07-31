@@ -28,6 +28,7 @@ public class ProductService {
 
 
     @Transactional
+    public Product createProduct(ProductDto productDto, List<MultipartFile> image) {
 
         Member seller = memberService.findByMemberId(productDto.getSeller_id());
         Category category = categoryService.getCategoryEntity(productDto.getCategory_id());
@@ -36,6 +37,16 @@ public class ProductService {
         product.assignCategory(category);
 
         product.setProduct(productDto.getTitle(),productDto.getDescription(),productDto.getPrice(), productDto.getStock(), productDto.getIsUsed());
+
+
+        if(image != null) {
+            for (MultipartFile multipartFile : image) {
+                ProductImage productImage = productImageService.createImage(multipartFile);
+
+                product.assignProductImages(productImage);
+
+            }
+        }
 
         return productRepository.save(product);
     }
@@ -46,19 +57,41 @@ public class ProductService {
         return ProductDto.setForm(product);
     }
     
+    public Product getProductEntity(Long productId) {
+        return getProduct(productId);
+    }
+
     public List<ProductDto> findAll() {
         return productRepository.findAll().stream()
                 .map(ProductDto::setForm)
                 .toList();
     }
 
+    public List<ProductDto> MemberProduct(Long memberId) {
+        return productRepository.findBySeller_id(memberId).stream()
+                .map(ProductDto::setForm)
+                .toList();
+    }
+
+
     @Transactional
+    public void modifyProduct(Long productId, ProductDto productDto, List<MultipartFile> image) {
         Product product = getProduct(productId);
 
         product.changeTitle(productDto.getTitle());
         product.changeDescription(productDto.getDescription());
         product.changePrice(productDto.getPrice());
         product.changeStock(productDto.getStock());
+
+        if(image != null) {
+            for (MultipartFile multipartFile : image) {
+                ProductImage productImage = productImageService.createImage(multipartFile);
+
+                product.assignProductImages(productImage);
+
+            }
+        }
+
 
     }
 
