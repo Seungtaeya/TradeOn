@@ -75,6 +75,13 @@ public class Product {
         this.stock = stock;
     }
 
+    public void changeUsed(boolean uesed) {
+        this.isUsed = isUsed;
+    }
+
+    public void changeCategory(Category category) {
+        this.category = category;
+    }
 
 
     @PrePersist
