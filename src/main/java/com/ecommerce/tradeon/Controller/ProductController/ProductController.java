@@ -3,7 +3,6 @@ package com.ecommerce.tradeon.Controller.ProductController;
 import com.ecommerce.tradeon.Dto.Category.CategoryDto;
 import com.ecommerce.tradeon.Dto.Product.ProductDto;
 import com.ecommerce.tradeon.Dto.Session.SessionMember;
-import com.ecommerce.tradeon.Entity.Image.ProductImage;
 import com.ecommerce.tradeon.Entity.product.Product;
 import com.ecommerce.tradeon.Service.CategoryService;
 import com.ecommerce.tradeon.Service.ProductImageService;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @Controller
