@@ -17,7 +17,7 @@ public class CartDto {
     private Long memberId;
     private Long productId;
     private List<CartItem> items;
-
+    private int price;
 
     public static CartDto setForm(Cart cart) {
         CartDto dto = new CartDto();
