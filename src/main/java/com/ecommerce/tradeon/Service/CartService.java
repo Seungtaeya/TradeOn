@@ -41,6 +41,11 @@ public class CartService {
         return CartDto.setForm(newcart);
     }
 
+    @Transactional
+    public void clear() {
+        cartRepository.deleteAll();
+    }
+
     public Cart getCart(Long cartId) {
         return cartRepository.findById(cartId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카트 아이디 입니다."));
