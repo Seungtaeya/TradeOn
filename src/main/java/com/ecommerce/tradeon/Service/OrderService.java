@@ -32,8 +32,6 @@ public class OrderService {
     private final CartService cartService;
     private final MemberService memberService;
     private final OrderItemService orderItemService;
-    private final EntityManager em;
-
 
     @Transactional
     public Order createOrder(OrderRequest request, Long memberId) {
@@ -41,7 +39,6 @@ public class OrderService {
         Order order = new Order();
         OrderItem orderItem = new OrderItem();
 
-        order.addOrderStatus(OrderStatus.PENDING);
         order.assignsMember(byMemberId);
 
         if(request.isOrdercart()) {
@@ -52,7 +49,7 @@ public class OrderService {
             for (CartItem item : items) {
                 orderItemService.createOrderItem(order, item.getProduct());
             }
-            order.addOrderStatus(OrderStatus.PAID);
+            order.addOrderStatus(OrderStatus.ORDERED);
             Order save = orderRepository.save(order);
             cartService.clear();
             return save;
@@ -61,7 +58,7 @@ public class OrderService {
         Product productEntity = productService.getProductEntity(request.getProductId());
 
         orderItemService.createOrderItem(order, productEntity);
-        order.addOrderStatus(OrderStatus.PAID);
+        order.addOrderStatus(OrderStatus.ORDERED);
         return orderRepository.save(order);
     }
 
@@ -79,10 +76,12 @@ public class OrderService {
     }
 
     public List<SalesOrderDto> findSalesOrderAll(Long memberId) {
-        // 1. 회원 아이디로 조회
-        // 2. 회원이 판매중인 제품이 있는지 조회
-        // 3. 판매중인 제품이 있으면 그 제품이 주문이 들어왔는지 조회
-        List<OrderItem> orderItems = orderItemService.findOrderItems(memberId);
-        // 4. 주문이 들어 왔다면 그것을 가져와서 컨트롤러에 전달
+        return orderRepository.findSalesOrderAll(memberId);
+    }
+
+    @Transactional
+    public void updateStatus(Long orderId, String status) {
+        Order byOrderId = orderRepository.findByOrderId(orderId);
+        byOrderId.changeStatus(status);
     }
 }
