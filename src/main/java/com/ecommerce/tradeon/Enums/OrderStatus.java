@@ -1,12 +1,10 @@
 package com.ecommerce.tradeon.Enums;
 
-import jakarta.persistence.Embeddable;
-
 public enum OrderStatus {
-    PENDING,
     PAID,
-    SHIPPED,
-    DELEVERED,
+    ORDERED,
+    PROCESSING,
+    SHIPPING,
+    DELIVERED,
     CANCELLED,
-    REFUNDED
 }
