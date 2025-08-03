@@ -1,8 +1,6 @@
 package com.ecommerce.tradeon.Entity.Order;
 
-import com.ecommerce.tradeon.Entity.Cart.Cart;
 import com.ecommerce.tradeon.Entity.Member.Member;
-import com.ecommerce.tradeon.Entity.product.Product;
 import com.ecommerce.tradeon.Enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -45,5 +43,16 @@ public class Order {
     @PrePersist
     private void orderDate() {
         this.orderDate = LocalDateTime.now();
+    }
+
+    public void changeStatus(String status) {
+        if ("PROCESSING".equals(status)) {
+            this.orderStatus = OrderStatus.PROCESSING;
+        } else if ("SHIPPING".equals(status)) {
+            this.orderStatus = OrderStatus.SHIPPING;
+        } else if ("DELIVERED".equals(status)) {
+            this.orderStatus = OrderStatus.DELIVERED;
+        } else
+            this.orderStatus = OrderStatus.CANCELLED;
     }
 }
