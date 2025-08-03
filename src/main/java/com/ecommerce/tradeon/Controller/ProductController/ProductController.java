@@ -2,11 +2,13 @@ package com.ecommerce.tradeon.Controller.ProductController;
 
 import com.ecommerce.tradeon.Dto.Category.CategoryDto;
 import com.ecommerce.tradeon.Dto.Product.ProductDto;
+import com.ecommerce.tradeon.Dto.Review.ReviewDto;
 import com.ecommerce.tradeon.Dto.Session.SessionMember;
 import com.ecommerce.tradeon.Entity.product.Product;
 import com.ecommerce.tradeon.Service.CategoryService;
 import com.ecommerce.tradeon.Service.ProductImageService;
 import com.ecommerce.tradeon.Service.ProductService;
+import com.ecommerce.tradeon.Service.ReviewService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryService  categoryService;
     private final ProductImageService productImageService;
+    private final ReviewService reviewService;
 
     @GetMapping("/product/new")
     public String createProduct(Model model, HttpSession session) {
@@ -53,7 +56,9 @@ public class ProductController {
     public String productDetail(@PathVariable(name = "id")Long productId, Model model) {
         ProductDto productOne = productService.getProductOne(productId);
         CategoryDto categoryOne = categoryService.getCategoryOne(productOne.getCategory_id());
+        List<ReviewDto> reviews = reviewService.findAllReviews();
 
+        model.addAttribute("reviews", reviews);
         model.addAttribute("category",categoryOne);
         model.addAttribute("product",productOne);
 

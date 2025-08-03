@@ -3,6 +3,7 @@ package com.ecommerce.tradeon.Dto.Order;
 import com.ecommerce.tradeon.Entity.Order.Order;
 import com.ecommerce.tradeon.Entity.Order.OrderItem;
 import com.ecommerce.tradeon.Enums.OrderStatus;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,14 @@ public class SalesOrderDto {
     private List<OrderItem> items;
     private OrderStatus status;
     private LocalDateTime createdAt;
+
+    @QueryProjection
+    public SalesOrderDto(Long id, List<OrderItem> items, OrderStatus status, LocalDateTime createdAt) {
+        this.id = id;
+        this.items = items;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
 
     public static SalesOrderDto setForm(Order order) {
         SalesOrderDto dto = new SalesOrderDto();
