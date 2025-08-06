@@ -22,7 +22,7 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    Member member;
+    private Member member;
 
     private String content;
     private Long rating;
@@ -32,6 +32,14 @@ public class Review {
 
     public Review(String content, Long rating) {
         this.content = content;
+        this.rating = rating;
+    }
+
+    public void changeContent(String content) {
+        this.content = content;
+    }
+
+    public void changeRating(Long rating) {
         this.rating = rating;
     }
 
