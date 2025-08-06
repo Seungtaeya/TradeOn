@@ -47,4 +47,33 @@ public class ReviewService {
                 .toList();
     }
 
+    public List<ReviewDto> findReviewByProductId(Long productId) {
+        return reviewRepository.findByProductId(productId)
+                .stream()
+                .map(ReviewDto::setForm)
+                .toList();
+    }
+
+    public ReviewDto findByReviewId(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("선택하신 리뷰가 없습니다."));
+        return ReviewDto.setForm(review);
+    }
+
+    @Transactional
+    public void updateReview(Long reviewId, ReviewDto dto) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("선택하신 리뷰가 없습니다."));
+
+        review.changeContent(dto.getContent());
+        review.changeRating(dto.getRating());
+    }
+
+    @Transactional
+    public void deleteReview(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("선택하신 리뷰가 없습니다."));
+        reviewRepository.delete(review);
+    }
+
 }

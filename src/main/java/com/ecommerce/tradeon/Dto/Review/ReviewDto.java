@@ -23,7 +23,9 @@ public class ReviewDto {
     public static ReviewDto setForm(Review review) {
         ReviewDto dto = new ReviewDto();
         dto.setId(review.getId());
+        dto.setMemberId(review.getMember().getId());
         dto.setMemberName(review.getMember().getUsername());
+        dto.setProductId(review.getProduct().getId());
         dto.setProductTitle(review.getProduct().getTitle());
         dto.setContent(review.getContent());
         dto.setCreatedAt(review.getCreatedAt());
