@@ -52,8 +52,8 @@ class ReviewServiceTest {
     @Transactional
     public void saveTest () throws Exception {
         //given
-        ReviewDto reviewDto = new ReviewDto(1L,1L, "testCode");
-        ReviewDto reviewDto1 = new ReviewDto(1L,2L, "2");
+        ReviewDto reviewDto = new ReviewDto(1L,1L, "testCode",5L);
+        ReviewDto reviewDto1 = new ReviewDto(1L,2L, "2",3L);
         Product productEntity = productService.getProductEntity(1L);
         Member byMemberId = memberService.findByMemberId(1L);
 

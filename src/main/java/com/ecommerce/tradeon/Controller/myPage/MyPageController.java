@@ -101,6 +101,11 @@ public class MyPageController {
         return "Member/SalesOrder";
     }
 
+    @GetMapping("/mypage/product/Qna")
+    public String ProductQna() {
+        return "Qna/ProductQna";
+    }
+
     private String loginCheck(SessionMember loginMember) {
 
         if (loginMember == null) {

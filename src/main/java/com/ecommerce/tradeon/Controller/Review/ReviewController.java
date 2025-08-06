@@ -2,7 +2,9 @@ package com.ecommerce.tradeon.Controller.Review;
 
 
 import com.ecommerce.tradeon.Dto.Order.OrderDetailDto;
+import com.ecommerce.tradeon.Dto.Session.SessionMember;
 import com.ecommerce.tradeon.Service.OrderService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,5 +22,15 @@ public class ReviewController {
         OrderDetailDto orderDetail = orderService.findOrderDetail(orderId);
         model.addAttribute("order",orderDetail);
         return "Review/ReviewForm";
+    }
+
+    @GetMapping("/mypage/reviews")
+    public String MyReviewForm(HttpSession session, Model model) {
+        return "Review/MyReviews";
+    }
+
+    @GetMapping("/review/edit/{id}")
+    public String ReviewEdit(@PathVariable(name = "id")Long reviewId) {
+        return "Review/ReviewEditForm";
     }
 }
