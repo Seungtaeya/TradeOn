@@ -6,6 +6,7 @@ import com.ecommerce.tradeon.Dto.Order.OrderDto;
 import com.ecommerce.tradeon.Dto.Order.SalesOrderDto;
 import com.ecommerce.tradeon.Dto.Product.ProductDto;
 import com.ecommerce.tradeon.Dto.Session.SessionMember;
+import com.ecommerce.tradeon.Exceptions.CustomLoginException;
 import com.ecommerce.tradeon.Service.CategoryService;
 import com.ecommerce.tradeon.Service.MemberService;
 import com.ecommerce.tradeon.Service.OrderService;
@@ -106,11 +107,10 @@ public class MyPageController {
         return "Qna/ProductQna";
     }
 
-    private String loginCheck(SessionMember loginMember) {
+    private void loginCheck(SessionMember loginMember) {
 
         if (loginMember == null) {
-            return "redirect:/login";
+            throw new CustomLoginException("로그인 해주세요");
         }
-        return null;
     }
 }

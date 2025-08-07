@@ -11,10 +11,9 @@ import java.io.IOException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomLoginException.class)
-    public String LoginException(CustomLoginException e, RedirectAttributes redirectAttributes) {
+    public String LoginException(CustomLoginException e) {
 
-        redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-        return "redirect:/login";
+        return "auth/login";
     }
 
     @ExceptionHandler(IOException.class)
