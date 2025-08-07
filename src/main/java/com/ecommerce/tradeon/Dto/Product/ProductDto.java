@@ -2,6 +2,7 @@ package com.ecommerce.tradeon.Dto.Product;
 
 import com.ecommerce.tradeon.Dto.Category.CategoryDto;
 import com.ecommerce.tradeon.Entity.Image.ProductImage;
+import com.ecommerce.tradeon.Entity.Wishlist.WishListItem;
 import com.ecommerce.tradeon.Entity.product.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,27 @@ public class ProductDto {
         productDto.setCreateAt(product.getCreate_At());
         return productDto;
     }
+
+    public static ProductDto setWishForm(WishListItem item) {
+        ProductDto productDto = new ProductDto();
+        productDto.setId(item.getProduct().getId());
+        productDto.setSeller_id(item.getProduct().getSeller_id().getId());
+        productDto.setCategory_id(item.getProduct().getCategory().getId());
+        productDto.setCategoryName(item.getProduct().getCategory().getName());
+        List<ProductImageDto> images = item.getProduct().getImages().stream()
+                .map(ProductImageDto::setForm)
+                .toList();
+
+        productDto.setImageUrl(images);
+        productDto.setTitle(item.getProduct().getTitle());
+        productDto.setDescription(item.getProduct().getDescription());
+        productDto.setPrice(item.getProduct().getPrice());
+        productDto.setStock(item.getProduct().getStock());
+        productDto.setIsUsed(item.getProduct().isUsed());
+        productDto.setCreateAt(item.getProduct().getCreate_At());
+        return productDto;
+    }
+
 
     public ProductDto(Long seller_id, Long category_id, List<ProductImageDto> imageUrl, String title, String description, int price, int stock, Boolean isUsed) {
         this.seller_id = seller_id;
