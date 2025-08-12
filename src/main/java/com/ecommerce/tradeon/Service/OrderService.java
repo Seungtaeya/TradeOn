@@ -1,10 +1,7 @@
 package com.ecommerce.tradeon.Service;
 
 import com.ecommerce.tradeon.Dto.Cart.CartDto;
-import com.ecommerce.tradeon.Dto.Order.OrderDetailDto;
-import com.ecommerce.tradeon.Dto.Order.OrderDto;
-import com.ecommerce.tradeon.Dto.Order.OrderRequest;
-import com.ecommerce.tradeon.Dto.Order.SalesOrderDto;
+import com.ecommerce.tradeon.Dto.Order.*;
 import com.ecommerce.tradeon.Dto.Product.ProductDto;
 import com.ecommerce.tradeon.Entity.Cart.Cart;
 import com.ecommerce.tradeon.Entity.Cart.CartItem;
@@ -20,7 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(readOnly = true)
@@ -34,10 +33,20 @@ public class OrderService {
     private final OrderItemService orderItemService;
 
     @Transactional
-    public Order createOrder(OrderRequest request, Long memberId) {
+    public Order createOrder(OrderRequest request, OrderRequestDto dto, Long memberId) {
         Member byMemberId = memberService.findByMemberId(memberId);
         Order order = new Order();
         OrderItem orderItem = new OrderItem();
+        List<OrderItemOptionDto> list = new ArrayList<>();
+
+        if(dto.getSelectedOptions() != null) {
+            for (Map.Entry<String, String> entry : dto.getSelectedOptions().entrySet()) {
+                OrderItemOptionDto optionDto = new OrderItemOptionDto();
+                optionDto.setName(entry.getKey());
+                optionDto.setOptionValue(entry.getValue());
+                list.add(optionDto);
+            }
+        }
 
         order.assignsMember(byMemberId);
 
@@ -47,8 +56,9 @@ public class OrderService {
             List<CartItem> items = byMemberId1.getItems();
 
             for (CartItem item : items) {
-                orderItemService.createOrderItem(order, item.getProduct());
+                orderItemService.createOrderItem(order,list, item.getProduct());
             }
+
             order.addOrderStatus(OrderStatus.ORDERED);
             Order save = orderRepository.save(order);
             cartService.clear();
@@ -57,7 +67,7 @@ public class OrderService {
 
         Product productEntity = productService.getProductEntity(request.getProductId());
 
-        orderItemService.createOrderItem(order, productEntity);
+        orderItemService.createOrderItem(order,list, productEntity);
         order.addOrderStatus(OrderStatus.ORDERED);
         return orderRepository.save(order);
     }

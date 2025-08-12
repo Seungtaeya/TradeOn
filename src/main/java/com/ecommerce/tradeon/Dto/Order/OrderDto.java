@@ -16,7 +16,7 @@ public class OrderDto {
 
     private Long id;
     private LocalDateTime orderDate;
-    private List<OrderItem> orderItems;
+    private List<OrderItemDto> orderItems;
     private OrderStatus orderStatus;
     private int totalPrice;
 
@@ -24,7 +24,11 @@ public class OrderDto {
         OrderDto Dto = new OrderDto();
         Dto.setId(order.getId());
         Dto.setOrderDate(order.getOrderDate());
-        Dto.setOrderItems(order.getOrderItems());
+
+        Dto.setOrderItems(order.getOrderItems().stream()
+                .map(OrderItemDto::setForm)
+                .toList());
+
         Dto.setOrderStatus(order.getOrderStatus());
         Dto.setTotalPrice(order.getOrderItems().stream()
                 .mapToInt(OrderItem::getPrice)
