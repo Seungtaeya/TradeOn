@@ -1,12 +1,10 @@
 package com.ecommerce.tradeon.Entity.product;
 
-import com.ecommerce.tradeon.Entity.Cart.Cart;
 import com.ecommerce.tradeon.Entity.Cart.CartItem;
 import com.ecommerce.tradeon.Entity.Category.Category;
 import com.ecommerce.tradeon.Entity.Image.ProductImage;
 import com.ecommerce.tradeon.Entity.Member.Member;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -36,6 +34,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImage> images = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductOption> options = new ArrayList<>();
 
     private String title;
     private String description;

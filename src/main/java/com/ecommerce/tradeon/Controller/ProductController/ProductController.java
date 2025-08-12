@@ -2,9 +2,11 @@ package com.ecommerce.tradeon.Controller.ProductController;
 
 import com.ecommerce.tradeon.Dto.Category.CategoryDto;
 import com.ecommerce.tradeon.Dto.Product.ProductDto;
+import com.ecommerce.tradeon.Dto.Product.ProductOptionDto;
 import com.ecommerce.tradeon.Dto.Review.ReviewDto;
 import com.ecommerce.tradeon.Dto.Session.SessionMember;
 import com.ecommerce.tradeon.Entity.product.Product;
+import com.ecommerce.tradeon.Entity.product.ProductOption;
 import com.ecommerce.tradeon.Service.CategoryService;
 import com.ecommerce.tradeon.Service.ProductImageService;
 import com.ecommerce.tradeon.Service.ProductService;
@@ -21,6 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,7 +35,6 @@ public class ProductController {
 
     private final ProductService productService;
     private final CategoryService  categoryService;
-    private final ProductImageService productImageService;
     private final ReviewService reviewService;
 
     @GetMapping("/product/new")
@@ -58,9 +64,15 @@ public class ProductController {
         CategoryDto categoryOne = categoryService.getCategoryOne(productOne.getCategory_id());
         List<ReviewDto> reviews = reviewService.findAllReviews();
 
+        Map<String, List<String>> options = productOne.getOptions().stream()
+                        .collect(Collectors.groupingBy(ProductOptionDto::getName,
+                                Collectors.mapping(ProductOptionDto::getOptionValue,toList())));
+
+
         model.addAttribute("reviews", reviews);
         model.addAttribute("category",categoryOne);
         model.addAttribute("product",productOne);
+        model.addAttribute("options", options);
 
         return "Product/productDetail";
     }

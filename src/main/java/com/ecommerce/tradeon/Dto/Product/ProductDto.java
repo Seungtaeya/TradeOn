@@ -1,9 +1,11 @@
 package com.ecommerce.tradeon.Dto.Product;
 
 import com.ecommerce.tradeon.Dto.Category.CategoryDto;
+import com.ecommerce.tradeon.Dto.Order.OrderRequestDto;
 import com.ecommerce.tradeon.Entity.Image.ProductImage;
 import com.ecommerce.tradeon.Entity.Wishlist.WishListItem;
 import com.ecommerce.tradeon.Entity.product.Product;
+import com.ecommerce.tradeon.Entity.product.ProductOption;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +21,8 @@ public class ProductDto {
     private Long category_id;
     private String categoryName;
     private List<ProductImageDto> imageUrl;
+    private List<ProductOptionDto> options;
+    private OrderRequestDto orderRequestDto;
     private String title;
     private String description;
     private int price;
@@ -35,8 +39,11 @@ public class ProductDto {
         List<ProductImageDto> images = product.getImages().stream()
                 .map(ProductImageDto::setForm)
                 .toList();
-
+        List<ProductOptionDto> options = product.getOptions().stream()
+                .map(ProductOptionDto::setForm)
+                .toList();
         productDto.setImageUrl(images);
+        productDto.setOptions(options);
         productDto.setTitle(product.getTitle());
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
@@ -55,7 +62,6 @@ public class ProductDto {
         List<ProductImageDto> images = item.getProduct().getImages().stream()
                 .map(ProductImageDto::setForm)
                 .toList();
-
         productDto.setImageUrl(images);
         productDto.setTitle(item.getProduct().getTitle());
         productDto.setDescription(item.getProduct().getDescription());

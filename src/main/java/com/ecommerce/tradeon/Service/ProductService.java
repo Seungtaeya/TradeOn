@@ -1,11 +1,14 @@
 package com.ecommerce.tradeon.Service;
 
 import com.ecommerce.tradeon.Dto.Product.ProductDto;
+import com.ecommerce.tradeon.Dto.Product.ProductOptionDto;
 import com.ecommerce.tradeon.Entity.Category.Category;
 import com.ecommerce.tradeon.Entity.Image.ProductImage;
 import com.ecommerce.tradeon.Entity.Member.Member;
 import com.ecommerce.tradeon.Entity.product.Product;
+import com.ecommerce.tradeon.Entity.product.ProductOption;
 import com.ecommerce.tradeon.Repository.ProductImageRepository;
+import com.ecommerce.tradeon.Repository.ProductOptionRepository;
 import com.ecommerce.tradeon.Repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductOptionRepository productOptionRepository;
     private final ProductImageService  productImageService;
     private final MemberService memberService;
     private final CategoryService categoryService;
@@ -48,11 +52,31 @@ public class ProductService {
             }
         }
 
+        if(!productDto.getOptions().isEmpty()) {
+            for (ProductOptionDto option : productDto.getOptions()) {
+                ProductOption po = new ProductOption(option.getName(), option.getOptionValue());
+                po.addProduct(product);
+                productOptionRepository.save(po);
+            }
+        }
+
         return productRepository.save(product);
     }
 
+//    public List<String> findProductOptionByOptionName(Long productId, String name) {
+//         return productOptionRepository.findByProduct_IdAndName(productId, name);
+//    }
+
     public ProductDto getProductOne(Long productId) {
         Product product = getProduct(productId);
+
+//        for (ProductOption option : product.getOptions()) {
+
+//            List<String> byProductIdAndName = productOptionRepository.findByProduct_IdAndName(productId, option.getName());
+
+//            option.loadOptionValuesFromDB(byProductIdAndName);
+
+//        }
 
         return ProductDto.setForm(product);
     }

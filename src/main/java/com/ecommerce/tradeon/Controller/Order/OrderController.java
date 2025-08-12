@@ -2,6 +2,7 @@ package com.ecommerce.tradeon.Controller.Order;
 
 import com.ecommerce.tradeon.Dto.Order.OrderDetailDto;
 import com.ecommerce.tradeon.Dto.Order.OrderRequest;
+import com.ecommerce.tradeon.Dto.Order.OrderRequestDto;
 import com.ecommerce.tradeon.Dto.Order.OrderStatusDto;
 import com.ecommerce.tradeon.Dto.Session.SessionMember;
 import com.ecommerce.tradeon.Service.OrderService;
@@ -19,14 +20,14 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/order")
-    public String Order(OrderRequest request, HttpSession session) {
+    public String Order(OrderRequest request, OrderRequestDto dto, HttpSession session) {
         SessionMember loginMember = (SessionMember) session.getAttribute("loginMember");
 
         if(loginMember == null) {
             return "redirect:/login";
         }
 
-        orderService.createOrder(request, loginMember.getId());
+        orderService.createOrder(request, dto, loginMember.getId());
 
         return "redirect:/mypage/orders";
     }
