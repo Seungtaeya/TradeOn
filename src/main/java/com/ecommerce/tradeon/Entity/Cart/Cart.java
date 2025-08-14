@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Cart {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
