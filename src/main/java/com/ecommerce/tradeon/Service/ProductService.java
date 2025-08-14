@@ -2,21 +2,23 @@ package com.ecommerce.tradeon.Service;
 
 import com.ecommerce.tradeon.Dto.Product.ProductDto;
 import com.ecommerce.tradeon.Dto.Product.ProductOptionDto;
+import com.ecommerce.tradeon.Dto.Search.ProductSearchCondition;
+import com.ecommerce.tradeon.Dto.Vo.RegionDto;
 import com.ecommerce.tradeon.Entity.Category.Category;
 import com.ecommerce.tradeon.Entity.Image.ProductImage;
 import com.ecommerce.tradeon.Entity.Member.Member;
 import com.ecommerce.tradeon.Entity.product.Product;
 import com.ecommerce.tradeon.Entity.product.ProductOption;
-import com.ecommerce.tradeon.Repository.ProductImageRepository;
+import com.ecommerce.tradeon.Entity.vo.Region;
 import com.ecommerce.tradeon.Repository.ProductOptionRepository;
 import com.ecommerce.tradeon.Repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -32,7 +34,7 @@ public class ProductService {
 
 
     @Transactional
-    public Product createProduct(ProductDto productDto, List<MultipartFile> image) {
+    public Product createProduct(ProductDto productDto, RegionDto regionDto, List<MultipartFile> image) {
 
         Member seller = memberService.findByMemberId(productDto.getSeller_id());
         Category category = categoryService.getCategoryEntity(productDto.getCategory_id());
@@ -42,6 +44,11 @@ public class ProductService {
 
         product.setProduct(productDto.getTitle(),productDto.getDescription(),productDto.getPrice(), productDto.getStock(), productDto.getIsUsed());
 
+        if(productDto.getIsUsed() == true && regionDto != null) {
+            product.addRegion(new Region(regionDto.getSido(),regionDto.getSigun(),regionDto.getDong()));
+        } else {
+            product.addRegion(null);
+        }
 
         if(image != null) {
             for (MultipartFile multipartFile : image) {
@@ -52,7 +59,7 @@ public class ProductService {
             }
         }
 
-        if(!productDto.getOptions().isEmpty()) {
+        if(productDto.getOptions() != null && !productDto.getOptions().isEmpty()) {
             for (ProductOptionDto option : productDto.getOptions()) {
                 ProductOption po = new ProductOption(option.getName(), option.getOptionValue());
                 po.addProduct(product);
@@ -63,20 +70,12 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-//    public List<String> findProductOptionByOptionName(Long productId, String name) {
-//         return productOptionRepository.findByProduct_IdAndName(productId, name);
-//    }
+    public Page<ProductDto> searchProduct(ProductSearchCondition cond, Pageable pageable) {
+        return productRepository.ProductSearchCondition(cond, pageable);
+    }
 
     public ProductDto getProductOne(Long productId) {
         Product product = getProduct(productId);
-
-//        for (ProductOption option : product.getOptions()) {
-
-//            List<String> byProductIdAndName = productOptionRepository.findByProduct_IdAndName(productId, option.getName());
-
-//            option.loadOptionValuesFromDB(byProductIdAndName);
-
-//        }
 
         return ProductDto.setForm(product);
     }
@@ -95,6 +94,18 @@ public class ProductService {
         return productRepository.findBySeller_id(memberId).stream()
                 .map(ProductDto::setForm)
                 .toList();
+    }
+
+    public List<ProductDto> findTopProductByViewCount(int limit) {
+        return productRepository.findMostView(limit);
+    }
+
+    public List<ProductDto> findTopProductByPopulars(int limit) {
+        return productRepository.findPopulars(limit);
+    }
+
+    public List<ProductDto> findTopProductByUsed(int limit) {
+        return productRepository.findUsed(limit);
     }
 
 
@@ -122,6 +133,13 @@ public class ProductService {
             }
         }
 
+    }
+
+    @Transactional
+    public void IncrementViewCount(Long productId) {
+        Product product = getProduct(productId);
+
+        product.increaseViewCount();
     }
 
     @Transactional

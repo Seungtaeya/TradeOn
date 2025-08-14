@@ -1,11 +1,9 @@
 package com.ecommerce.tradeon.Dto.Product;
 
-import com.ecommerce.tradeon.Dto.Category.CategoryDto;
 import com.ecommerce.tradeon.Dto.Order.OrderRequestDto;
-import com.ecommerce.tradeon.Entity.Image.ProductImage;
+import com.ecommerce.tradeon.Dto.Vo.RegionDto;
 import com.ecommerce.tradeon.Entity.Wishlist.WishListItem;
 import com.ecommerce.tradeon.Entity.product.Product;
-import com.ecommerce.tradeon.Entity.product.ProductOption;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,8 +25,10 @@ public class ProductDto {
     private String description;
     private int price;
     private int stock;
+    private Long viewCount;
     private Boolean isUsed;
     private LocalDateTime createAt;
+    private RegionDto region;
 
     public static ProductDto setForm(Product product) {
         ProductDto productDto = new ProductDto();
@@ -48,8 +48,12 @@ public class ProductDto {
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
         productDto.setStock(product.getStock());
+        productDto.setViewCount(product.getViewCount());
         productDto.setIsUsed(product.isUsed());
         productDto.setCreateAt(product.getCreate_At());
+        if(product.getRegion() != null) {
+            productDto.setRegion(new RegionDto(product.getRegion().getSido(), product.getRegion().getSigun(), product.getRegion().getDong()));
+        }
         return productDto;
     }
 
@@ -69,6 +73,9 @@ public class ProductDto {
         productDto.setStock(item.getProduct().getStock());
         productDto.setIsUsed(item.getProduct().isUsed());
         productDto.setCreateAt(item.getProduct().getCreate_At());
+        if(item.getProduct().getRegion() != null) {
+            productDto.setRegion(new RegionDto(item.getProduct().getRegion().getSido(), item.getProduct().getRegion().getSigun(), item.getProduct().getRegion().getDong()));
+        }
         return productDto;
     }
 

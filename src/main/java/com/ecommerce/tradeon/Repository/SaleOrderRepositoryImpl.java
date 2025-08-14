@@ -1,7 +1,6 @@
 package com.ecommerce.tradeon.Repository;
 
 import com.ecommerce.tradeon.Dto.Order.SalesOrderDto;
-import com.ecommerce.tradeon.Entity.Member.QMember;
 import com.ecommerce.tradeon.Entity.Order.Order;
 import com.ecommerce.tradeon.Entity.Order.QOrder;
 import com.ecommerce.tradeon.Entity.Order.QOrderItem;
@@ -15,7 +14,6 @@ import java.util.List;
 public class SaleOrderRepositoryImpl implements SaleOrderRepository{
 
     private final JPAQueryFactory jpaQueryFactory;
-    QMember member = QMember.member;
     QOrderItem oi = QOrderItem.orderItem;
     QProduct product = QProduct.product;
     QOrder order = QOrder.order;
@@ -25,7 +23,6 @@ public class SaleOrderRepositoryImpl implements SaleOrderRepository{
         List<Order> fetch = jpaQueryFactory
                 .selectFrom(order)
                 .join(order.orderItems, oi).fetchJoin()
-//                .join(oi.order, order).fetchJoin()
                 .where(product.seller_id.id.eq(memberId))
                 .fetch();
 
