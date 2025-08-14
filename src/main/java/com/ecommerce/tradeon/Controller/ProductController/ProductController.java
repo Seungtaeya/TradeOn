@@ -5,10 +5,9 @@ import com.ecommerce.tradeon.Dto.Product.ProductDto;
 import com.ecommerce.tradeon.Dto.Product.ProductOptionDto;
 import com.ecommerce.tradeon.Dto.Review.ReviewDto;
 import com.ecommerce.tradeon.Dto.Session.SessionMember;
+import com.ecommerce.tradeon.Dto.Vo.RegionDto;
 import com.ecommerce.tradeon.Entity.product.Product;
-import com.ecommerce.tradeon.Entity.product.ProductOption;
 import com.ecommerce.tradeon.Service.CategoryService;
-import com.ecommerce.tradeon.Service.ProductImageService;
 import com.ecommerce.tradeon.Service.ProductService;
 import com.ecommerce.tradeon.Service.ReviewService;
 import jakarta.servlet.http.HttpSession;
@@ -26,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 @Controller
@@ -50,10 +48,10 @@ public class ProductController {
     }
 
     @PostMapping("/product/new")
-    public String saveProduct(@Valid ProductDto productDto,
+    public String saveProduct(@Valid ProductDto productDto, RegionDto regionDto,
                               @RequestParam(name = "images") List<MultipartFile> image) {
 
-        Product product = productService.createProduct(productDto, image);
+        Product product = productService.createProduct(productDto,regionDto, image);
 
         return "redirect:/product/detail/" + product.getId();
     }
@@ -68,6 +66,7 @@ public class ProductController {
                         .collect(Collectors.groupingBy(ProductOptionDto::getName,
                                 Collectors.mapping(ProductOptionDto::getOptionValue,toList())));
 
+        productService.IncrementViewCount(productId);
 
         model.addAttribute("reviews", reviews);
         model.addAttribute("category",categoryOne);

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @AllArgsConstructor
 public class OrderItemOption {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

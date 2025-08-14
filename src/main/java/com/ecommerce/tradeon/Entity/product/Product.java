@@ -4,6 +4,7 @@ import com.ecommerce.tradeon.Entity.Cart.CartItem;
 import com.ecommerce.tradeon.Entity.Category.Category;
 import com.ecommerce.tradeon.Entity.Image.ProductImage;
 import com.ecommerce.tradeon.Entity.Member.Member;
+import com.ecommerce.tradeon.Entity.vo.Region;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.Objects;
 @NoArgsConstructor()
 public class Product {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,10 +39,15 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductOption> options = new ArrayList<>();
 
+    @Embedded
+    private Region region;
+
     private String title;
     private String description;
     private int price;
     private int stock;
+    @Column(name = "view_count", nullable = false)
+    private Long viewCount = 0L;
     private boolean isUsed;
     private LocalDateTime create_At;
 
@@ -51,6 +57,14 @@ public class Product {
         this.price = price;
         this.stock = stock;
         this.isUsed = isUsed;
+    }
+
+    public void increaseViewCount() {
+        this.viewCount += 1;
+    }
+
+    public void addRegion(Region region) {
+        this.region = region;
     }
 
     public void assignMember(Member member) {

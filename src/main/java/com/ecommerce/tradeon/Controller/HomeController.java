@@ -26,9 +26,15 @@ public class HomeController {
     public String home(Model model) {
         List<CategoryDto> categoryDtos = categoryService.listAll();
         List<ProductDto> all = productService.findAll();
+        List<ProductDto> mostViewCount = productService.findTopProductByViewCount(5);
+        List<ProductDto> Populars = productService.findTopProductByPopulars(5);
+//        List<ProductDto> Used = productService.findTopProductByUsed(5);
 
+        model.addAttribute("popularProducts",Populars);
+//        model.addAttribute("usedProduct",Used);
         model.addAttribute("categories", categoryDtos);
         model.addAttribute("latestProducts", all);
+        model.addAttribute("mostViewedProducts", mostViewCount);
         return "home";
     }
 
