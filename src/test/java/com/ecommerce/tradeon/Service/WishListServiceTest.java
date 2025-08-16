@@ -43,10 +43,10 @@ class WishListServiceTest {
         categoryService.createCategory(category);
 
         ProductDto productDto = new ProductDto(1L,1L,null,"testproduct","test",10000,100,true);
-        Product product = productService.createProduct(productDto, null);
+        Product product = productService.createProduct(productDto, null,null);
 
         ProductDto productDto1 = new ProductDto(1L,1L,null,"test","test",10,100,true);
-        Product product1 = productService.createProduct(productDto1, null);
+        Product product1 = productService.createProduct(productDto1,null, null);
     }
 
     @Test

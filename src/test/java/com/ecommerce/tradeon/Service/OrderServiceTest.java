@@ -49,7 +49,7 @@ class OrderServiceTest {
         categoryService.createCategory(category);
 
         ProductDto productDto = new ProductDto(1L,1L,null,"testproduct","test",10000,100,true);
-        Product product = productService.createProduct(productDto, null);
+        Product product = productService.createProduct(productDto, null,null);
     }
 
     @Test
@@ -69,7 +69,7 @@ class OrderServiceTest {
 
         //when
         orderRequest.setProductId(productEntity.getId());
-        Order order = orderService.createOrder(orderRequest, 1L);
+        Order order = orderService.createOrder(orderRequest, null,1L);
 //        List<Order> all = orderService.findAll();
 
         Member byMemberId = memberService.findByMemberId(1L);

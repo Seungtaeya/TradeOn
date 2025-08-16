@@ -29,6 +29,10 @@ public class Category {
         this.name = name;
     }
 
+    public void changeParentName(Category parent) {
+        this.parent = parent;
+    }
+
     private void assignParentCategory(Category category) {
         this.parent = category;
     }

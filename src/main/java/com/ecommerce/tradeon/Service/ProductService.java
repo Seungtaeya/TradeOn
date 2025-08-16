@@ -108,6 +108,9 @@ public class ProductService {
         return productRepository.findUsed(limit);
     }
 
+    public List<ProductDto> findTop5NewProduct(int limit) {
+        return productRepository.findNewProduct(limit);
+    }
 
     @Transactional
     public void modifyProduct(Long productId, ProductDto productDto, List<MultipartFile> image) {
