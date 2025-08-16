@@ -9,5 +9,5 @@ public interface ProductHomeQueryRepository {
     List<ProductDto> findPopulars(int limit);
     List<ProductDto> findMostView(int limit);
     List<ProductDto> findUsed(int limit);
-    List<ProductDto> findBestSellers(int limit);
+    List<ProductDto> findNewProduct(int limit);
 }
