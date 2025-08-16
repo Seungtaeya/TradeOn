@@ -29,7 +29,7 @@ public class HomeController {
         List<ProductDto> mostViewCount = productService.findTopProductByViewCount(5);
         List<ProductDto> Populars = productService.findTopProductByPopulars(5);
         List<ProductDto> Used = productService.findTopProductByUsed(5);
-        List<ProductDto> newProducts = productService.findTop5ProductByBestSeller(5);
+        List<ProductDto> newProducts = productService.findTop5NewProduct(5);
 
 
         model.addAttribute("newProducts", newProducts );

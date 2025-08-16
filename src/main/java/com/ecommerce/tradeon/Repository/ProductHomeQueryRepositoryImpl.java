@@ -1,11 +1,9 @@
 package com.ecommerce.tradeon.Repository;
 
 import com.ecommerce.tradeon.Dto.Product.ProductDto;
-import com.ecommerce.tradeon.Entity.Order.QOrder;
 import com.ecommerce.tradeon.Entity.Order.QOrderItem;
 import com.ecommerce.tradeon.Entity.product.Product;
 import com.ecommerce.tradeon.Entity.product.QProduct;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +28,6 @@ public class ProductHomeQueryRepositoryImpl implements ProductHomeQueryRepositor
                 .orderBy(product.id.count().desc())
                 .fetch();
 
-
         return fetch.stream().map(ProductDto::setForm).toList();
     }
 
@@ -49,16 +46,22 @@ public class ProductHomeQueryRepositoryImpl implements ProductHomeQueryRepositor
     @Override
     public List<ProductDto> findUsed(int limit) {
         List<Product> fetch = jpaQueryFactory
-                .select(product)
-                .from(product)
+                .selectFrom(product)
                 .where(product.isUsed)
+                .orderBy(product.create_At.desc())
                 .fetch();
 
         return fetch.stream().map(ProductDto::setForm).toList();
     }
 
     @Override
-    public List<ProductDto> findBestSellers(int limit) {
-        return List.of();
+    public List<ProductDto> findNewProduct(int limit) {
+        List<Product> fetch = jpaQueryFactory
+                .selectFrom(product)
+                .where(product.isUsed.not())
+                .orderBy(product.create_At.desc())
+                .fetch();
+
+        return fetch.stream().map(ProductDto::setForm).toList();
     }
 }
