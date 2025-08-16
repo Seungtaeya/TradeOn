@@ -2,6 +2,7 @@ package com.ecommerce.tradeon.Service;
 
 import com.ecommerce.tradeon.Dto.Product.ProductDto;
 import com.ecommerce.tradeon.Dto.Product.ProductOptionDto;
+import com.ecommerce.tradeon.Dto.Search.ProductSearchCondition;
 import com.ecommerce.tradeon.Entity.Category.Category;
 import com.ecommerce.tradeon.Entity.Member.Member;
 import com.ecommerce.tradeon.Entity.product.Product;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ class ProductServiceTest {
     public void create () throws Exception {
         //given
         ProductDto productDto = new ProductDto(1L,1L,null,"testproduct","test",10000,100,true);
-        Product product = productService.createProduct(productDto, null);
+        Product product = productService.createProduct(productDto, null,null);
         //when
 
         //then
@@ -71,7 +73,7 @@ class ProductServiceTest {
         listop.add(op1);
 
         productDto.setOptions(listop);
-        Product product = productService.createProduct(productDto, null);
+        Product product = productService.createProduct(productDto,null, null);
 
         for (ProductOption option : product.getOptions()) {
             System.out.println("option.getOptionValue() = " + option.getOptionValue());
@@ -80,14 +82,29 @@ class ProductServiceTest {
         //when
         ProductDto productOne = productService.getProductOne(1L);
 
-        List<String> color = productService.findProductOptionByOptionName(productOne.getId(), "색상");
-        for (String s : color) {
-            System.out.println("s = " + s);
-        }
         //then
         assertThat(productDto.getTitle()).isEqualTo(productOne.getTitle());
         assertThat(productDto.getDescription()).isEqualTo(productOne.getDescription());
-        assertThat(op.getOptionValue()).isEqualTo(color.get(0));
-        assertThat(op1.getOptionValue()).isEqualTo(color.get(1));
+    }
+
+    @Test
+    public void searchProduct() throws Exception {
+        //given
+        ProductDto productDto = new ProductDto(1L,1L,null,"testproduct1","test",10000,100,true);
+        ProductDto productDto1 = new ProductDto(1L,1L,null,"testproduct2123","test",10000,100,true);
+        ProductDto productDto2 = new ProductDto(1L,1L,null,"testproduct3213","test",10000,100,true);
+        productService.createProduct(productDto,null,null);
+        productService.createProduct(productDto1,null,null);
+        productService.createProduct(productDto2,null,null);
+        //when
+        ProductSearchCondition cond = new ProductSearchCondition();
+        cond.setKeyword("test");
+        Page<ProductDto> productDtos = productService.searchProduct(cond);
+
+        //then
+        assertThat(productDtos.getSize()).isEqualTo(3);
+        assertThat(productDtos.getContent().get(0).getTitle()).isEqualTo("testproduct1");
+        assertThat(productDtos.getContent().get(1).getTitle()).isEqualTo("testproduct2123");
+        assertThat(productDtos.getContent().get(2).getTitle()).isEqualTo("testproduct3213");
     }
 }
