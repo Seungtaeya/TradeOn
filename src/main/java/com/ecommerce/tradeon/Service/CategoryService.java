@@ -52,8 +52,9 @@ public class CategoryService {
     @Transactional
     public void modify(Long categoryId, CategoryDto categoryDto) {
         Category category = getCategory(categoryId);
-
+        Category parentCategory = getCategory(categoryDto.getParentId());
         category.changeName(categoryDto.getName());
+        category.changeParentName(parentCategory);
     }
 
     @Transactional

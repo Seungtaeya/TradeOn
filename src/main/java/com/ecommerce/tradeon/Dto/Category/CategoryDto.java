@@ -12,14 +12,14 @@ public class CategoryDto {
     private Long id;
     private String name;
     private Long parentId;
-    private Category parent;
+    private CategoryDto parent;
 
     public static CategoryDto setForm(Category category) {
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setId(category.getId());
         categoryDto.setName(category.getName());
         categoryDto.setParentId(category.getParent() != null ? category.getParent().getId() : 0L);
-        categoryDto.setParent(category.getParent() != null ? category.getParent() : null);
+        categoryDto.setParent(category.getParent() != null ? new CategoryDto(category.getParent().getName(),category.getParent().getId()) : null);
         return categoryDto;
     }
     public CategoryDto(String name) {
@@ -28,7 +28,6 @@ public class CategoryDto {
 
     public CategoryDto(String name, Long parentId) {
         this.name = name;
-        this.parentId = parentId;
+        this.id = parentId;
     }
-
 }

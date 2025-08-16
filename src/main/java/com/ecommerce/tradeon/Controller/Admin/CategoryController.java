@@ -32,6 +32,11 @@ public class CategoryController {
         return "Admin/Category/category";
     }
 
+    @GetMapping("category/{id}")
+    public String listCategoryProducts(@PathVariable(name = "id") Long categoryId, Model model) {
+        return "Product/list";
+    }
+
     @PostMapping("/admin/categories")
     public String SaveCategory(CategoryDto categoryDto, RedirectAttributes redirectAttributes) {
 
@@ -70,6 +75,8 @@ public class CategoryController {
 
     @PostMapping("/admin/categories/modify/{id}")
     public String modifyCategory(@PathVariable(name = "id") Long categoryId, CategoryDto categoryDto) {
+
+
         categoryService.modify(categoryId, categoryDto);
         return "redirect:/admin/category";
     }
