@@ -1,9 +1,13 @@
 package com.ecommerce.tradeon.Controller.Admin;
 
 import com.ecommerce.tradeon.Dto.Category.CategoryDto;
+import com.ecommerce.tradeon.Dto.Product.ProductDto;
 import com.ecommerce.tradeon.Entity.Category.Category;
 import com.ecommerce.tradeon.Service.CategoryService;
+import com.ecommerce.tradeon.Service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +20,7 @@ import java.util.List;
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final ProductService productService;
 
     @GetMapping("/admin/category")
     public String Category(Model model) {
@@ -34,6 +39,12 @@ public class CategoryController {
 
     @GetMapping("category/{id}")
     public String listCategoryProducts(@PathVariable(name = "id") Long categoryId, Model model) {
+        Page<ProductDto> productByCategoryId = productService.findProductByCategoryId(categoryId, PageRequest.of(0, 10));
+        CategoryDto categoryOne = categoryService.getCategoryOne(categoryId);
+
+        model.addAttribute("category",categoryOne);
+        model.addAttribute("products", productByCategoryId);
+
         return "Product/list";
     }
 

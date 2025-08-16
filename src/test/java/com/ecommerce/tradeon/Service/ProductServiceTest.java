@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -99,7 +100,7 @@ class ProductServiceTest {
         //when
         ProductSearchCondition cond = new ProductSearchCondition();
         cond.setKeyword("test");
-        Page<ProductDto> productDtos = productService.searchProduct(cond);
+        Page<ProductDto> productDtos = productService.searchProduct(cond, PageRequest.of(0,5));
 
         //then
         assertThat(productDtos.getSize()).isEqualTo(3);

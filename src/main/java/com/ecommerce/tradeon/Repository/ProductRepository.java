@@ -6,10 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<Product, Long>, ProductSearch, ProductHomeQueryRepository{
+public interface ProductRepository extends JpaRepository<Product, Long>, ProductSearch, ProductHomeQueryRepository, ProductCategoryQueryRepository{
 
     @Query("select p from Product p where p.seller_id.id = :memberId")
     List<Product> findBySeller_id(Long memberId);
-
-    List<Product> findTop5ByViewCountOrderByDescription(Long viewCount);
 }

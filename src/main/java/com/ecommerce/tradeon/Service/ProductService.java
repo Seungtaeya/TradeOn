@@ -70,6 +70,10 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public Page<ProductDto> findProductByCategoryId(Long categoryId, Pageable pageable) {
+        return productRepository.findByCategoryId(categoryId, pageable);
+    }
+
     public Page<ProductDto> searchProduct(ProductSearchCondition cond, Pageable pageable) {
         return productRepository.ProductSearchCondition(cond, pageable);
     }
