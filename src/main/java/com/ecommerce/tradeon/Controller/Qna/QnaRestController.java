@@ -42,4 +42,14 @@ public class QnaRestController {
         qnaService.saveQna(qnaDto);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/qna/lists")
+    public List<QnaDto> getMyQnaList(HttpSession session) {
+        SessionMember loginMember = (SessionMember) session.getAttribute("loginMember");
+        List<QnaDto> qnaByMemberId = qnaService.findQnaByMemberId(loginMember.getId());
+        for (QnaDto qnaDto : qnaByMemberId) {
+            System.out.println("qnaDto.getContent() = " + qnaDto.getContent());
+        }
+        return qnaByMemberId;
+    }
 }

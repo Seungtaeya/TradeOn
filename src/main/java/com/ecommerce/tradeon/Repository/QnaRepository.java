@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface QnaRepository extends JpaRepository<Qna, Long> {
     List<Qna> findByProductId(Long productId);
+
+    List<Qna> findByMemberId(Long memberId);
 }

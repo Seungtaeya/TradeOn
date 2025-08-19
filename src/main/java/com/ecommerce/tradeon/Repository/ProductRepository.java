@@ -10,4 +10,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
 
     @Query("select p from Product p where p.seller_id.id = :memberId")
     List<Product> findBySeller_id(Long memberId);
+
+
 }

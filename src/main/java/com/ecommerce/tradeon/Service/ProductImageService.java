@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,7 +28,7 @@ public class ProductImageService {
             try {
                 String uploadDir = "/Users/seungtae/IdeaProjects/TradeOn/uploads";
 
-                String fileName = image.getOriginalFilename();
+                String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
 
                 File destfile = new File(uploadDir, fileName);
 
