@@ -1,5 +1,6 @@
 package com.ecommerce.tradeon.Service;
 
+import com.ecommerce.tradeon.Dto.Category.CategoryDto;
 import com.ecommerce.tradeon.Dto.Product.ProductDto;
 import com.ecommerce.tradeon.Dto.Product.ProductOptionDto;
 import com.ecommerce.tradeon.Dto.Search.ProductSearchCondition;
@@ -71,6 +72,13 @@ public class ProductService {
     }
 
     public Page<ProductDto> findProductByCategoryId(Long categoryId, Pageable pageable) {
+
+        CategoryDto categoryOne = categoryService.getCategoryOne(categoryId);
+
+        if(categoryOne.getParentId() == 0L) {
+            return productRepository.findProductsInCategoryTree(categoryId,pageable);
+        }
+
         return productRepository.findByCategoryId(categoryId, pageable);
     }
 

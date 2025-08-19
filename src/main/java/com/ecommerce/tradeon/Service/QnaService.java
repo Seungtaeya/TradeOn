@@ -43,6 +43,12 @@ public class QnaService {
         return qnaRepository.save(qna);
     }
 
+    public List<QnaDto> findQnaByMemberId(Long memberId) {
+        List<Qna> byMemberId = qnaRepository.findByMemberId(memberId);
+
+        return byMemberId.stream().map(QnaDto::setForm).toList();
+    }
+
     public Qna saveReply(QnaDto qnaDto) {
         Qna qnaParent = getQnaParent(qnaDto);
         Qna qna = new Qna(qnaDto.getContent());
