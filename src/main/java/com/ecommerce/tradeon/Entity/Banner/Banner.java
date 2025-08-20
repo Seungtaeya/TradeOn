@@ -19,7 +19,8 @@ public class Banner {
     private String linkUrl;
     private String imageName;
 
-    public Banner(String imageUrl) {
+    public Banner(String imageUrl, String imageName) {
         this.imageUrl = imageUrl;
+        this.imageName = imageName;
     }
 }

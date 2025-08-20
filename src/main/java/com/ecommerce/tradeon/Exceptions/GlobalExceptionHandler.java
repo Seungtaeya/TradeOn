@@ -18,7 +18,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IOException.class)
     public String IOException(IOException e , RedirectAttributes model) {
-        model.addFlashAttribute("errorMassage","상품 등록 실패했습니다. 다시 등록해주세요");
-        return "redirect:/product/new";
+        model.addFlashAttribute("errorMessage","상품 등록 실패했습니다. 다시 등록해주세요");
+        return "redirect:/error/exception";
+    }
+
+    @ExceptionHandler(CustomBannerException.class)
+    public String BannerException(CustomBannerException e, RedirectAttributes model) {
+
+        model.addFlashAttribute("errorMessage", e.getMessage());
+        return "redirect:/error/exception";
     }
 }
