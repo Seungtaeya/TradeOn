@@ -1,9 +1,7 @@
 package com.ecommerce.tradeon.Entity.Notice;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.ecommerce.tradeon.Enums.NoticeStatus;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,12 +16,15 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    private String content;
     private LocalDate createdAt;
-    private boolean state;
+    @Enumerated(EnumType.STRING)
+    private NoticeStatus state;
 
 
-    public Notice(String title, LocalDate createdAt, boolean state) {
+    public Notice(String title, LocalDate createdAt,String content, NoticeStatus state) {
         this.title = title;
+        this.content = content;
         this.createdAt = createdAt;
         this.state = state;
     }

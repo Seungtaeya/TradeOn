@@ -1,11 +1,9 @@
 package com.ecommerce.tradeon.Repository;
 
-import com.ecommerce.tradeon.Dto.Cart.CartDto;
 import com.ecommerce.tradeon.Entity.Cart.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
 

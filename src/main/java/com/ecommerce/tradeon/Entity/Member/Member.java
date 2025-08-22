@@ -54,4 +54,24 @@ public class Member {
             this.role = Role.USER;
         }
     }
+
+    public void changeUserName(String username) {
+        this.username = username;
+    }
+
+    public void changeEmail(String email) {
+        this.email = email;
+    }
+
+    public void changePhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void changePassword(String password) {
+        this.password = password;
+    }
+
+    public void changeAddress(String city, String street, String zipcode) {
+        this.address = new Address(city,street,zipcode);
+    }
 }

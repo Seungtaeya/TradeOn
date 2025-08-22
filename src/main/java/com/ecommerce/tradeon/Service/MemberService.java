@@ -1,6 +1,7 @@
 package com.ecommerce.tradeon.Service;
 
 import com.ecommerce.tradeon.Dto.Member.AdminMemberDto;
+import com.ecommerce.tradeon.Dto.Member.MemberDto;
 import com.ecommerce.tradeon.Dto.Member.myPageMemberDto;
 import com.ecommerce.tradeon.Entity.Member.Member;
 import com.ecommerce.tradeon.Exceptions.CustomeMemberException;
@@ -49,10 +50,29 @@ public class MemberService {
     }
 
     @Transactional
+    public void updateUser(Long memberId, MemberDto memberDto) {
+        Member member = getMember(memberId);
+
+        member.changeUserName(memberDto.getUsername());
+        member.changePhone(memberDto.getPhone());
+        if(memberDto.getNewPassword() != null) {
+            member.changePassword(memberDto.getNewPassword());
+        } else
+            member.changePassword(memberDto.getPassword());
+        member.changeAddress(memberDto.getCity(),memberDto.getStreet(),memberDto.getZipcode());
+
+    }
+
+    @Transactional
     public void AdminMemberDelete(Long memberId) {
         Member member = getMember(memberId);
 
         memberRepository.delete(member);
+    }
+
+    public MemberDto findMemberById(Long memberId) {
+        Member member = getMember(memberId);
+        return MemberDto.setForm(member);
     }
 
     public AdminMemberDto AdminFindMember(Long memberId) {

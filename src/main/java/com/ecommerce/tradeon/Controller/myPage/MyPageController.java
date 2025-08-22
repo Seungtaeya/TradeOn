@@ -1,6 +1,7 @@
 package com.ecommerce.tradeon.Controller.myPage;
 
 import com.ecommerce.tradeon.Dto.Category.CategoryDto;
+import com.ecommerce.tradeon.Dto.Member.MemberDto;
 import com.ecommerce.tradeon.Dto.Member.myPageMemberDto;
 import com.ecommerce.tradeon.Dto.Order.OrderDto;
 import com.ecommerce.tradeon.Dto.Order.SalesOrderDto;
@@ -107,9 +108,18 @@ public class MyPageController {
         return "Qna/ProductQna";
     }
 
+    @GetMapping("/mypage/settings")
+    public String updateUserProfileForm(HttpSession session, Model model) {
+        SessionMember loginMember = (SessionMember) session.getAttribute("loginMember");
+        MemberDto member = memberService.findMemberById(loginMember.getId());
+
+        model.addAttribute("member",member);
+        return "Member/UserDetail";
+    }
+
     private void loginCheck(SessionMember loginMember) {
 
-        if (loginMember == null) {
+        if (loginMember == null || loginMember.getId() == null) {
             throw new CustomLoginException("로그인 해주세요");
         }
     }
