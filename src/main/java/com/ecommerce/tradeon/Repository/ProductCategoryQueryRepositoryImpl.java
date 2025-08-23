@@ -27,7 +27,8 @@ public class ProductCategoryQueryRepositoryImpl implements ProductCategoryQueryR
         List<Product> fetch = jpaQueryFactory
                 .select(product)
                 .from(product)
-                .where(product.category.id.eq(categoryId))
+                .leftJoin(product.category, category).fetchJoin()
+                .where(category.id.eq(categoryId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(product.create_At.desc())
@@ -41,7 +42,7 @@ public class ProductCategoryQueryRepositoryImpl implements ProductCategoryQueryR
                 .where(product.category.id.eq(categoryId))
                 .fetchOne();
 
-        Long total = l != null ? l : 0L;
+        long total = l != null ? l : 0L;
 
         return new PageImpl<>(list,pageable,total);
     }
@@ -58,14 +59,24 @@ public class ProductCategoryQueryRepositoryImpl implements ProductCategoryQueryR
         List<Product> fetch = jpaQueryFactory
                 .select(product)
                 .from(product)
-                .where(product.category.id.in(rootCategoryId1))
+                .leftJoin(product.category,category).fetchJoin()
+                .where(category.id.in(rootCategoryId1))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
         List<ProductDto> list = fetch.stream().map(ProductDto::setForm).toList();
 
-        return new PageImpl<>(list);
+        Long l = jpaQueryFactory
+                .select(product.count())
+                .from(product)
+                .leftJoin(product.category, category)
+                .where(category.id.in(rootCategoryId1))
+                .fetchOne();
+
+        long total = l != null ? l : 0L;
+
+        return new PageImpl<>(list, pageable, total);
 
     }
 

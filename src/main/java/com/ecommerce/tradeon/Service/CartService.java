@@ -51,6 +51,7 @@ public class CartService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카트 아이디 입니다."));
     }
 
+    @Transactional
     public CartDto findByMemberId(Long memberId) {
 
         if(cartRepository.findMemberId(memberId) == null) {
@@ -58,7 +59,6 @@ public class CartService {
             Member byMemberId = memberService.findByMemberId(memberId);
             cart.assignMember(byMemberId);
 
-            cartRepository.flush();
             cartRepository.save(cart);
 
             return CartDto.setForm(cart);
