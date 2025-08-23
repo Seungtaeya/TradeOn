@@ -38,8 +38,10 @@ public class CategoryController {
     }
 
     @GetMapping("category/{id}")
-    public String listCategoryProducts(@PathVariable(name = "id") Long categoryId, Model model) {
-        Page<ProductDto> productByCategoryId = productService.findProductByCategoryId(categoryId, PageRequest.of(0, 10));
+    public String listCategoryProducts(@PathVariable(name = "id") Long categoryId,
+                                       @RequestParam(name="page", defaultValue = "0") int page,
+                                       @RequestParam(name = "sort", defaultValue = "3") int sort, Model model) {
+        Page<ProductDto> productByCategoryId = productService.findProductByCategoryId(categoryId, PageRequest.of(page, sort));
         CategoryDto categoryOne = categoryService.getCategoryOne(categoryId);
 
         model.addAttribute("category",categoryOne);
