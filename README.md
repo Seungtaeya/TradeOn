@@ -26,6 +26,11 @@
     - 공지사항(목록/상세) 홈 화면 배너 노출
 
   # 이미지
+  -db 다이어그램
+
+  <img width="1281" height="742" alt="db_Diagram" src="https://github.com/user-attachments/assets/461ac30c-9299-4661-83b4-b52c50c7cd86" />
+
+  
   -홈 화면
     - 카테고리, 배너, 최신/인기/많이 본 상품/중고/신상품 순으로 출력
   <img width="1436" height="2248" alt="스크린샷 2025-08-23 오후 10 20 31" src="https://github.com/user-attachments/assets/7b89f3eb-9792-4fe7-b613-71228848c4c4" />
