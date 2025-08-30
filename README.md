@@ -101,4 +101,27 @@
 <img width="1020" height="258" alt="스크린샷 2025-08-23 오후 11 25 38" src="https://github.com/user-attachments/assets/14bb3c8c-e37f-44dc-9c76-7466436341bb" />
 
 - 관리자 페이지
-  -
+  - 회원, 공지사항, 배너, 카테고리 관리 페이지
+<img width="1236" height="268" alt="스크린샷 2025-08-30 오후 8 58 39" src="https://github.com/user-attachments/assets/d786ee0a-a711-4a84-afb5-56e9eb500a15" />
+  
+- 회원 관리 페이지
+  - 회원 상세정보, 회원 추방 기능, 회원 직위 변경
+  
+<img width="1421" height="450" alt="스크린샷 2025-08-30 오후 9 00 33" src="https://github.com/user-attachments/assets/0bb1d208-9e91-489a-a721-495722cd14ba" />
+<img width="1432" height="476" alt="스크린샷 2025-08-30 오후 9 00 43" src="https://github.com/user-attachments/assets/2e4a15ee-7c33-4981-9d47-740e0b3402e0" />
+
+- 공지사항
+  - 작성, 삭제 기능
+
+<img width="1440" height="475" alt="스크린샷 2025-08-30 오후 9 07 45" src="https://github.com/user-attachments/assets/15b856b1-be0f-4e02-af78-ba8c8600efe2" />
+<img width="1440" height="705" alt="스크린샷 2025-08-30 오후 9 07 51" src="https://github.com/user-attachments/assets/eeb03fe0-879d-4f13-b023-29187bb3b724" />
+
+- 배너 등록 페이지
+  - 배너 등록 삭제 기능
+
+<img width="1440" height="705" alt="스크린샷 2025-08-30 오후 9 09 52" src="https://github.com/user-attachments/assets/28c94bff-094a-418b-909d-56b1af1df3f5" />
+
+- 카테고리 등록 페이지
+  - 카테고리 등록, 수정, 삭제 기능
+
+<img width="1440" height="880" alt="스크린샷 2025-08-30 오후 9 10 28" src="https://github.com/user-attachments/assets/f41e2a04-d825-4435-97d4-94560a839e21" />
