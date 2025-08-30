@@ -90,9 +90,11 @@
   - 1번 페이지
 
 <img width="897" height="535" alt="스크린샷 2025-08-23 오후 11 17 37" src="https://github.com/user-attachments/assets/bb0debd9-41ce-4ccf-8e14-e6855d85f165" />
+
   - 2번 페이지
 
 <img width="897" height="535" alt="스크린샷 2025-08-23 오후 11 17 42" src="https://github.com/user-attachments/assets/54279ce2-8051-4b0c-8680-eeccf772c668" />
+
   - 고양이 -> 랙돌 카테고리로 이동
 
 
