@@ -86,11 +86,16 @@
   - 홈 화면서 카테고리 클릭시 최상위 카테고리면 최상위 포함 최상위 상속 받는 하위 카테고리 까지 출력 ( 페이징 처리 )
   - 하위 카테고리일 시 하위 카테고리만 출력  ( 페이징 처리 )
 <img width="237" height="473" alt="스크린샷 2025-08-23 오후 11 19 55" src="https://github.com/user-attachments/assets/cd60c17c-645d-4952-ac97-63006a617db1" />
-- 1번 페이지
+
+  - 1번 페이지
+
 <img width="897" height="535" alt="스크린샷 2025-08-23 오후 11 17 37" src="https://github.com/user-attachments/assets/bb0debd9-41ce-4ccf-8e14-e6855d85f165" />
-- 2번 페이지
+  - 2번 페이지
+
 <img width="897" height="535" alt="스크린샷 2025-08-23 오후 11 17 42" src="https://github.com/user-attachments/assets/54279ce2-8051-4b0c-8680-eeccf772c668" />
-- 고양이 -> 랙돌 카테고리로 이동
+  - 고양이 -> 랙돌 카테고리로 이동
+
+
 <img width="897" height="535" alt="스크린샷 2025-08-23 오후 11 17 58" src="https://github.com/user-attachments/assets/92ed0d90-e6ad-4134-bf54-29009ccd5399" />
 
 - 상품 판매자 주문 관리
